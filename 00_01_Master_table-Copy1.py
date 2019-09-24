@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -27,7 +27,7 @@ def total_number_reads():
         dict itself key filename and value the other sub-dict
         dict in dict (sub-dict)-> total sequences and the amount of it as value
     """
-    os.chdir('/data1/eCLASH/0-Fastqc/')
+    os.chdir('/data1/eCLASH/')
     path=os.getcwd()
     folders=glob('*.zip')
     dic_table={}
@@ -72,7 +72,7 @@ def show_amount():
     ax = df.plot.bar( rot=0)
     ax
     
-    #plt.savefig('/data1/eCLASH/0-Fastqc/Stacked_total amount.pdf', bbox_inches='tight')
+    #plt.savefig('/data1/eCLASH/Stacked_total amount.pdf', bbox_inches='tight')
     return df
     
 show_amount()    
@@ -95,7 +95,7 @@ def trimmed_reads():
         dict itself key filename and value the other sub-dict
         dict in dict (sub-dict)-> total sequences and the amount of it as value
     """
-    os.chdir('/data1/eCLASH/1-Trimm/report/')
+    os.chdir('/data1/eCLASH/report/')
     path=os.getcwd()
     folders=glob('*.zip')
     dic_table=total_number_reads()
@@ -231,10 +231,6 @@ def STAR_reads():
             #print(no)
             word=re.findall(r'[a-z]{7}_[a-z]{6,10}_[a-z]{4,6}', line) #20 #27 #29 #24
             word_0=str(word[0])
-            #print(word_0)
-            #print(name, no)
-            
-            #dic_table[name[0]].update({word_0:no[0]})
             
             if name not in dic_STAR.keys():
                 dic_STAR[name]={word_0:no[0]}
@@ -290,10 +286,10 @@ def dic_to_df1():
     df_STAR=df_STAR[col_reorder] #change order columns
 
     
-    #df_table.to_csv('/data1/eCLASH/Overview_table_preliminary_analysis.csv', sep='\t', 
+    #df_table.to_csv('/data1/eCLASH/preliminary_analysis.csv', sep='\t', 
    # header=True, index=True)
     
-    #df_STAR.to_csv('/data1/eCLASH/1_UMI_Overview_FÜRDIEMA_TOTAL_AMOUNT.csv', sep='\t', header=True, index=True)
+    #df_STAR.to_csv('/data1/eCLASH/1_UMI_Overview.csv', sep='\t', header=True, index=True)
     
     return df_STAR
 
@@ -395,7 +391,7 @@ def append_chimeras():
                                                                   'Total_Amount']
     df_upper.loc['% unmappable reads']=df_upper.loc['% unmappable reads']-df_upper.loc['% chimeric read']
     
-    #df_upper.to_csv('/data1/eCLASH/4-Chimera_Alex/results_not_on_genes/Overview_chimeric.csv',
+    #df_upper.to_csv('/data1/eCLASH/Overview_chimeric.csv',
                    # sep='\t', header=True, index=True)
     
     
@@ -420,7 +416,7 @@ def make_stacked_bp():
     """
     from df make stacked bar plot 
     """
-    #os.chdir('/data1/eCLASH/4-Chimera_Alex/results_not_on_genes')
+    #os.chdir('/data1/eCLASH/')
     #os.chdir('/data1/eCLASH/')
     p=os.getcwd()
 
@@ -471,7 +467,7 @@ def make_stacked_bp_perc():
     """
     from df make stacked bar plot 
     """
-    os.chdir('/data1/eCLASH/4-Chimera_Alex')#4-Chimera_Alex/results_not_on_genes')
+    os.chdir('/data1/eCLASH/')#4-Chimera_Alex/results_not_on_genes')
     p=os.getcwd()
     #print(p)
 
@@ -516,7 +512,7 @@ def make_stacked_bp_perc():
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-    #plt.savefig('./UMI_Stacked_bp_mappingandCHIMERIC_PERCENTAGE_all_reps.pdf', bbox_inches='tight')
+    #plt.savefig('./UMI_Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
     
@@ -535,7 +531,7 @@ def make_stacked_bp_perc():
     fig.set_size_inches(1.5, 4)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
     
-    #plt.savefig('./Stacked_bp_mappingevents_PERCENTAGE.pdf', bbox_inches='tight')
+    #plt.savefig('./Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
 make_stacked_bp_perc()
