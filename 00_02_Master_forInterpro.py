@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -8,9 +8,6 @@ import pandas as pd
 import subprocess,sys, os 
 import re
 from glob import glob 
-
-
-# In[ ]:
 
 
 def make_2_col():
@@ -23,7 +20,7 @@ def make_2_col():
         this must stay:
         SMEST026673001.1
     """
-    os.chdir('/data1/AnLi_FM_MA/data/Dresden_genome_planaria/')
+    os.chdir('/data1/')
     path=os.getcwd()
     file=glob('*.bed')
     print(file)
@@ -33,9 +30,9 @@ def make_2_col():
     #print(df.head(5))
     df[9]=df[9].replace('"; gene_id "SMESG[0-9]{8,9}.[0-9]{1}";', '', regex=True)
     print(df.head(20))
-    output_path='/data1/Master/CLASH/Analysis/7-bedtools_chimera/'
+    output_path='/data1/Master/'
     
-    #df.to_csv(output_path +'/first_four_smes_g_and_t.bed', sep='\t', header=False, index=False)
+    #df.to_csv(output_path +'/smes_g.bed', sep='\t', header=False, index=False)
 
 
 make_2_col()
@@ -46,7 +43,7 @@ make_2_col()
 
 def overlap_with_pandas():
     """
-    get tsv file from interpro and smes_g_and_t.bed 
+    get tsv file from interpro and smes_g.bed 
     find overlaps leave 2nd column of interpro in bed file 
     """
     
@@ -57,7 +54,7 @@ def overlap_with_pandas():
                       header=None, engine='python')
     df_ip.rename(columns={0:'SMEST',1:'Interpro'}, inplace=True)
     
-    df_col=pd.read_csv('/data1/Master/CLASH/Analysis/7-bedtools_chimera/smes_g_and_t.bed', 
+    df_col=pd.read_csv('/data1/Master/smes_g.bed', 
                       sep='\t', header=None, engine='python')
     df_col.rename(columns={0:'SMESG', 1:'SMEST'}, inplace=True)
     
@@ -67,19 +64,19 @@ def overlap_with_pandas():
 
     
     col={'SMESG': 'first', 'Interpro':'first'}#,'sequences':'first'}
-    #grouped_xins=xins.groupby(xins['sequences']).aggregate(col) #.apply(pd.DataFrame)
+
     df_g=df_m.groupby(df_m['SMEST'], sort=True).aggregate(col)
     print(df_g.head(20))
     
     
-    #df_g.to_csv('/data1/Master/CLASH/Analysis/7-bedtools_chimera/intersected_Interpro_SmesT.bed', 
+    #df_g.to_csv('/data1/Master/CLASH/Interpro.bed', 
      #             sep='\t', header=False, index=True)
         
     
     drop=df_g.dropna()
     print(drop.head(5))
     
-    drop.to_csv('/data1/Master/CLASH/Analysis/7-bedtools_chimera/for_heatmap_interpro_wo_na.csv', 
+    drop.to_csv('/data1/Master/for_heatmap.csv', 
                 header=True, sep='\t', index=True)
     
 overlap_with_pandas()
