@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -13,13 +13,8 @@ import optparse, shutil
 
 
 path_to_input_fasta=input('Path to input bed2 files : ') 
-#/data1/AnLi_FM_MA/data/output_sm3_KD/bowtie_index/bed_files/greater_than_25/fasta_cutoff/
+
 output_path_RNA=input('Path to output w/ new dir name : ')
-#/data1/AnLi_FM_MA/data/output_sm3_KD/bowtie_index/bed_files/greater_than_25/fasta_cutoff/T_U_exchg
-
-
-# In[ ]:
-
 
 def exchange_U_w_T(path_to_input_fasta, output_path_RNA):
     """
@@ -42,7 +37,7 @@ def exchange_U_w_T(path_to_input_fasta, output_path_RNA):
         if file.endswith('.fa') and file not in fasta_files:
             fasta_files.append(file)
 
-    #print(bed2_files) #--->>>>>>>>>>> check if there is even a file included    
+   
     for file in fasta_files:
             op_file=file.split('25_cutoff_') #looses the \n= newline
             op_file=op_file[1]
