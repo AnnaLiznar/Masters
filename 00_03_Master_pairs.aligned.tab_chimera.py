@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -20,7 +20,7 @@ def get_chimera():
     in pairs.aligned.tab file are chimera names are stored, which actually are chimeras 
     -> make list of all chimeras from pairs.aligned.tab file 
     """
-    pairs_aligned_path='/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results/'
+    pairs_aligned_path='/data1/Master/results/'
     dir_list=['1_1u', '3_2u', '5_3u', '7_4u', '9_5u'] #iterate 
     pairs_aligned_file='pairs.aligned.tab'
     
@@ -48,10 +48,10 @@ def make_bedfile():
     """
     -> grep only those chimeric sequences which are stored in list from get_chimera
     """
-    bedtools_path='/data1/Master/CLASH/Analysis/7-bedtools/'
+    bedtools_path='/data1/Master/CLASH/'
     elements=['LINE', 'DNA', 'LTR', 'Unk', 'Intron', 'No_annot', 'Cluster']
     #path and list for input names list
-    pairs_aligned_path='/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results/'
+    pairs_aligned_path='/data1/Master/results/'
     dir_list=['1_1u', '3_2u', '5_3u', '7_4u', '9_5u']
     input_names_list=[]
     for ordner in dir_list:
