@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -9,10 +9,6 @@ import subprocess, sys, os
 import re
 from glob import glob 
 
-
-# In[ ]:
-
-
 def get_chimera():
     """
     chimera: sequence made of two distinct origins 
@@ -20,7 +16,7 @@ def get_chimera():
     in pairs.aligned.tab file are chimera names are stored, which actually are chimeras 
     -> make list of all chimeras from pairs.aligned.tab file 
     """
-    pairs_aligned_path='/data1/eCLASH/4-Chimera_Alex/results_not_on_genes'
+    pairs_aligned_path='/data1/eCLASH/'
     dir_list=['ctrl_1', 'ctrl_2', 'piRNA_1']
     pairs_aligned_file='pairs.aligned.tab'
     
@@ -38,12 +34,12 @@ def get_chimera():
                               stdout=subprocess.PIPE, 
                               stderr=subprocess.PIPE, 
                               shell=True)
-    comand='cat /data1/eCLASH/4-Chimera_Alex/results_all/piRNA_2/pairs.aligned.tab | cut -f1 > /data1/eCLASH/4-Chimera_Alex/results_not_on_genes/piRNA_2/piRNA_2_chimeric_names.txt'
+    comand='cat /data1/eCLASH//pairs.aligned.tab | cut -f1 > /data1/eCLASH/piRNA_2_chimeric_names.txt'
     subprocess.check_call(comand, 
                               stdout=subprocess.PIPE, 
                               stderr=subprocess.PIPE, 
                               shell=True)
-    commad='cat /data1/eCLASH/4-Chimera_Alex/results_all/piRNA_3/pairs.aligned.tab | cut -f1 > /data1/eCLASH/4-Chimera_Alex/results_not_on_genes/piRNA_3/piRNA_3_chimeric_names.txt'
+    commad='cat /data1/eCLASH/pairs.aligned.tab | cut -f1 > /data1/eCLASH/piRNA_3_chimeric_names.txt'
     subprocess.check_call(commad, 
                               stdout=subprocess.PIPE, 
                               stderr=subprocess.PIPE, 
@@ -58,15 +54,15 @@ def make_bedfile():
     """
     -> grep only those chimeric sequences which are stored in list from get_chimera
     """
-    bedtools_path='/data1/eCLASH/6-bedtools/'
+    bedtools_path='/data1/eCLASH/'
     elements=['LINE', 'DNA', 'LTR', 'Unk', 'Intron', 'No_annot', 'Cluster', 'Exon']
     #path and list for input names list
-    pairs_aligned_path='/data1/eCLASH/4-Chimera_Alex/results_not_on_genes/'
+    pairs_aligned_path='/data1/eCLASH/'
     dir_list=['ctrl_1', 'ctrl_2', 'piRNA_1', 'piRNA_2', 'piRNA_3']
     input_names_list=[]
     for ordner in dir_list:
         input_names_list.append(pairs_aligned_path+ordner+'/'+ordner+'_chimeric_names.txt')
-    #print(input_names_list)
+
     
     for ele in elements:
         os.chdir(bedtools_path+'/'+ele)
@@ -103,10 +99,4 @@ def make_bedfile():
                     continue
     
 make_bedfile()  
-
-
-# In[ ]:
-
-
-
 
