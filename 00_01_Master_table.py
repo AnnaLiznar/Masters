@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -27,7 +27,7 @@ def total_number_reads():
         dict itself key filename and value the other sub-dict
         dict in dict (sub-dict)-> total sequences and the amount of it as value
     """
-    os.chdir('/data1/Master/CLASH/Analysis/1-fastqc/')
+    os.chdir('/data1/Master/')
     path=os.getcwd()
     folders=glob('*.zip')
     dic_table={}
@@ -52,15 +52,9 @@ def total_number_reads():
                                 dic_table[zip.filename.split(
                                     '_fastqc.zip')[0]]={
                                     'Total number of sequenced reads ':motif[0]}
-                                
-            
-        #os.chdir(path+'/'+folder)
-        #print('succeded')
-        #break
-        #os.chdir(path)
-    #print(dic_table)
+
     return dic_table
-    #print(len(dic_table))
+
 total_number_reads()
 
 
@@ -132,10 +126,8 @@ def collapsed_reads():
     os.chdir('/data1/Master/CLASH/Analysis/')
     with open(file, 'r') as f:
         for line in f:
-            #print(line)
             name=re.findall(motif_filename, line)
             no=re.findall(motif_seq, line)
-            #print(name[0], no[0])
             
             dic_table[name[0]].update({
                 'Total number of reads after removing PCR duplicates':no[0]})
@@ -154,7 +146,7 @@ def sortme_reads():
     
     regular expressions are needed
     """
-    os.chdir('/data1/Master/CLASH/Analysis/')
+    os.chdir('/data1/Master/')
     path=os.getcwd()
     file=glob('sort*.txt')[0]
     dic_table=collapsed_reads()
@@ -193,7 +185,7 @@ def STAR_reads():
     
     regular expressions are needed
     """
-    os.chdir('/data1/Master/CLASH/Analysis/')
+    os.chdir('/data1/Master/CLASH/')
     path=os.getcwd()
     file=glob('STAR*.txt')[0]
     #dic_table=sortme_reads()
@@ -202,7 +194,7 @@ def STAR_reads():
     motif_filename=r'[0-9]{1,2}_[0-9]{1}[a-z]{1}'
     motif_seq=r'[0-9]{6,8}'
     
-    os.chdir('/data1/Master/CLASH/Analysis/')
+    os.chdir('/data1/Master/CLASH/')
     with open(file, 'r') as f:
         for line in f:
             #print(line)
@@ -286,9 +278,9 @@ def dic_to_df():
     
     #print(os.getcwd())
     
-    #df_table.to_csv('./Overview_table_preliminary_analysis.csv', sep='\t', header=True, index=True)
+    #df_table.to_csv('./Overview.csv', sep='\t', header=True, index=True)
     
-    df_STAR.to_csv('./Overview_mapped_TOTAL_AMOUNT.csv', sep='\t', header=True, index=True)
+    df_STAR.to_csv('./Overview.csv', sep='\t', header=True, index=True)
     
     return df_table, df_STAR
 
@@ -303,7 +295,7 @@ def calc_chimeric():
     take pairs.aligned.tab and calc amount
     """
     path='/data1/Master/CLASH/Analysis'
-    results_path='/6-chimeraSearch_clipseqtool/results_all/'
+    results_path='/results/'
     reps=['1_1u', '3_2u', '5_3u', '7_4u', '9_5u']
     path_list=[]
     for rep in reps:
@@ -327,7 +319,7 @@ def make_chimeric_df():
     make df
     """
     df_path='/data1/Master/CLASH/Analysis'
-    results_path=df_path+'/6-chimeraSearch_clipseqtool/results_all/'
+    results_path=df_path+'/results/'
     reps=['1_1u', '3_2u', '5_3u', '7_4u', '9_5u']
     path_list=[]
     for rep in reps:
@@ -356,7 +348,7 @@ def append_chimeras():
     save as csv
     """
     Overview_mapped_path='/data1/Master/CLASH/Analysis/'
-    txt_file_path=Overview_mapped_path+'/6-chimeraSearch_clipseqtool/results_all/'
+    txt_file_path=Overview_mapped_path+'/results/'
     names=['1_1u', '3_2u', '5_3u', '7_4u', '9_5u']
     filename='_chimera.txt'
     dic_chimera={}
@@ -364,19 +356,19 @@ def append_chimeras():
     for name in names:
         with open(txt_file_path+name+filename, 'r') as f:
             line=f.readline().rstrip() #rstrip() looses the newline character
-            #print(line)
+
             dic_chimera[name]={'chimeric read':line}
-    #print(dic_chimera)
+
     df_chim=pd.DataFrame.from_dict(dic_chimera)
-    #print(df_chim)
+
     df=pd.read_csv(Overview_mapped_path+'Overview_mapped_TOTAL_AMOUNT.csv', sep='\t', index_col= [0])
-    #print(df)
+
     df_upper=df[['1_1u', '3_2u', '5_3u', '7_4u', '9_5u']]
-    #print(df_upper)
+
     df_upper=df_upper.append(df_chim)
-    #print(df_upper)
+
     df_upper=df_upper.apply(pd.to_numeric)
-    #print(df_upper)
+
     df_upper.loc['genomic_unmappable_reads']=df_upper.loc[
         'genomic_unmappable_reads']-df_upper.loc['chimeric read']
     #print(df_upper)
@@ -404,16 +396,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 def make_stacked_bp():
     """
     from df make stacked bar plot 
@@ -421,7 +403,7 @@ def make_stacked_bp():
     os.chdir('/data1/Master/CLASH/Analysis/')
     p=os.getcwd()
     #print(p)
-    file=glob('Overview_upper_chimeric.csv')
+    file=glob('Overview.csv')
     print(file)
     df=pd.read_csv(p+'/'+file[0], sep='\t', index_col=[0])
     print(df)
@@ -437,9 +419,7 @@ def make_stacked_bp():
                                         'genomic_multiple_mapper_reads': 'Multimapper reads',
                                         'genomic_unmappable_reads':'Unmappable reads',
                                         'chimeric reads': 'Chimeric reads'})
-    #print(df_t)
-    #fig = stacked_barplot(df, rotation=45, legend_loc='best')
-    #fig.show()
+
     pal = sns.color_palette("tab20")
     p=df_t.plot.bar(stacked=True,  color=pal, alpha=0.4, rot=0, title='Mapping events')
     p.set_ylabel("Amount of mappings *10⁶", fontsize=12)
@@ -449,7 +429,7 @@ def make_stacked_bp():
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-    #plt.savefig('./Stacked_bp_mappingevents.pdf', bbox_inches='tight')
+    #plt.savefig('./Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
 make_stacked_bp()
@@ -466,15 +446,15 @@ def make_stacked_bp_perc():
     p=os.getcwd()
     #print(p)
     file=glob('Overview_upper_chimeric.csv')
-    #print(file)
+
     df=pd.read_csv(p+'/'+file[0], sep='\t', index_col=[0])
-    #print(df)
+
     
     df=df.drop(['Total_Amount','genomic_mapper_reads', 'genomic_unique_mapper_reads',
                 'genomic_multiple_mapper_reads', 'genomic_unmappable_reads', 'chimeric read'])
     df=df.rename(index=str, columns={'1_1u':'1', '3_2u':'2', '5_3u':'3', '7_4u':'4','9_5u':'5'})
     #df=df/1000000
-    #print(df)
+
     df_t=df.transpose()
     #df_t=df_t.rename(index=str, columns={'genomic_mapper_reads':'Mapper reads', 
                                      #    'genomic_unique_mapper_reads':'Unique mapper reads',
@@ -484,13 +464,11 @@ def make_stacked_bp_perc():
     print(df_t)
     df_aa=df_t.loc[['2', '3', '4']]
     df_a=pd.DataFrame(df_aa.agg('mean'))
-   # print((df_a))
+
     df_a=df_a.rename(index=str, columns={0:'1-5'})
     df_a=df_a.transpose()
     print((df_a))
-    
-    #fig = stacked_barplot(df, rotation=45, legend_loc='best')
-    #fig.show()
+
     pal = sns.color_palette("Dark2_r")
     p=df_t.plot.bar(stacked=True,  color=pal, alpha=0.4, rot=0, title='Mapping events')
     p.set_ylabel("Distribution of mapping events [%]", fontsize=12)
@@ -500,7 +478,7 @@ def make_stacked_bp_perc():
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-    #plt.savefig('./Stacked_bp_mappingevents_PERCENTAGE_all_reps.pdf', bbox_inches='tight')
+    #plt.savefig('./Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
     
@@ -520,7 +498,7 @@ def make_stacked_bp_perc():
     fig.set_size_inches(1.5, 4)
     #plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
     
-    #plt.savefig('./Stacked_bp_mappingevents_PERCENTAGE.pdf', bbox_inches='tight')
+    #plt.savefig('./Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
 make_stacked_bp_perc()
