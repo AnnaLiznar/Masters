@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -15,9 +15,6 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-# In[ ]:
-
-
 def get_files_2(path_2, motif)-> list:
     """
     load all files names into a list
@@ -27,10 +24,7 @@ def get_files_2(path_2, motif)-> list:
     files=glob(motif)
     return(files)
 
-#get_files_2('/data1/AnLi_FM_MA/data/output_sm3_KD/normalized/', 'norm*.csv')
-
-
-# In[ ]:
+#get_files_2('/data1/normalized/', 'norm*.csv')
 
 
 def output_folder(path_t):
@@ -64,10 +58,10 @@ def find_elements():
     input: files -> intersected files with exons, DNA, LTR, LINE and Unkn Tes and introns
     output: txt files with amount of chimeric sequences 
     """
-    bedtools_path='/data1/eCLASH/6-bedtools/'
+    bedtools_path='/data1/eCLASH/'
     dirs=['Cluster', 'DNA', 'Exon', 'Intron', 'LINE', 'LTR', 'No_annot', 'Unk']
     motif='grep*.bed'
-    output_file_path='/data1/eCLASH/6-bedtools/Overview_targets'
+    output_file_path='/data1/eCLASH/Overview'
     path_outp=output_folder(output_file_path) #creates new folder 
     
     for d in dirs:
@@ -100,8 +94,6 @@ def find_elements():
 find_elements()
 
 
-# In[ ]:
-
 
 def get_total_chimeric_reads():
     """
@@ -111,7 +103,7 @@ def get_total_chimeric_reads():
     count those 
     """
     names=['ctrl_1', 'ctrl_2', 'piRNA_1', 'piRNA_2', 'piRNA_3']
-    general_path='/data1/eCLASH/4-Chimera_Alex/results_not_on_genes/amount_chimeras/'
+    general_path='/data1/eCLASH/'
     filename='fragments.large.filtered.Aligned.bam'
     
     chim_dic={}
@@ -137,7 +129,7 @@ def get_total_chimeric_reads():
         
 get_total_chimeric_reads()
 #samtools view 'bam' | grep -Fwf '//results_all/1_1u/1_1u_input_names.txt' - |cut -f1 | sort -u | wc -l 
-#/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results_all/1_1u/1_1u_input_names.txt
+#/data1/Master/CLASH/results/input_names.txt
 
 
 # In[ ]:
@@ -166,7 +158,7 @@ def append_chimeras():
     #print(dic_chimera)
     df_chim=pd.DataFrame.from_dict(dic_chimera)
     print(df_chim)
-    overview_path='/data1/eCLASH/1_UMI_Overview_mapped_TOTAL_AMOUNT.csv'
+    overview_path='/data1/eCLASH/Overview.csv'
     df=pd.read_csv(overview_path, sep='\t', index_col=0)
     #print(df)
 
@@ -199,7 +191,7 @@ def append_to_overview():
                                         'Nr10_piRNA_1': 'piRNA_1',
                                         'Nr11_piRNA_2':'piRNA_2',
                                         'Nr12_piRNA_3': 'piRNA_3'})
-    path='/data1/eCLASH/6-bedtools/'
+    path='/data1/eCLASH/'
     files=get_files_2(path+'Overview_targets', '*txt')
     
     ########## get df 
@@ -260,7 +252,7 @@ def get_df():
     """
     open csv file as df with pandas
     """
-    path='/data1/eCLASH/6-bedtools/'
+    path='/data1/eCLASH/'
     os.chdir(path)
     p=os.getcwd()
     #print(p)
@@ -347,7 +339,7 @@ def make_piechart():
                startangle=180, textprops={'fontsize': 14})
         plt.title('Distribution of annotated elements in {}'.format(rep))
         plt.legend(labels= df.index.tolist(), bbox_to_anchor=(1.07,1.05), loc="upper left") 
-        #plt.savefig('/data1/eCLASH/6-bedtools/Overview_targets/PIECHART_{}.pdf'.format(
+        #plt.savefig('/data1/eCLASH/PIECHART_{}.pdf'.format(
             #rep), bbox_inches='tight')
         plt.show()
         plt.close()
@@ -361,16 +353,13 @@ def make_stacked_bp_perc():
     """
     from df make stacked bar plot 
     """
-    os.chdir('/data1/eCLASH/')#4-Chimera_Alex/results_not_on_genes')
+    os.chdir('/data1/eCLASH/')
     p=os.getcwd()
-    #print(p)
 
-    #file=glob('1_UMI_Overview_mapped_TOTAL_AMOUNT.csv')
     file=glob('Overview_chimeric.csv')
-    #print(file)
+
     df=pd.read_csv(p+'/'+file[0], sep='\t', index_col=[0])
-    #print(df)
-    #Nr08_ctrl_1','Nr09_ctrl_2','Nr10_piRNA_1','Nr11_piRNA_2','Nr12_piRNA_3
+
     df=df.drop(['Total_Amount','genomic_mapper_reads', 'genomic_unique_mapper',
                 'genomic_multiple_mapper', 'genomic_unmappable_reads', 'chimeric read'])
     df=df.rename(index=str, columns={'Nr08_ctrl_1':'ctrl_1', 
@@ -378,24 +367,17 @@ def make_stacked_bp_perc():
                                      'Nr10_piRNA_1':'eCLASH_1', 
                                      'Nr11_piRNA_2':'eCLASH_2',
                                      'Nr12_piRNA_3':'eCLASH_3'})
-    #df=df/1000000
-    #print(df)
+
     df_t=df.transpose()
-    #df_t=df_t.rename(index=str, columns={'genomic_mapper_reads':'Mapper reads', 
-                                     #    'genomic_unique_mapper_reads':'Unique mapper reads',
-                                     #   'genomic_multiple_mapper_reads': 'Multimapper reads',
-                                     #   'genomic_unmappable_reads':'Unmappable reads',
-                                      #  'chimeric reads': 'Chimeric reads'})
+
     print(df_t)
     df_aa=df_t.loc[['eCLASH_1', 'eCLASH_2', 'eCLASH_3']]
     df_a=pd.DataFrame(df_aa.agg('mean'))
-   # print((df_a))
+
     df_a=df_a.rename(index=str, columns={0:'1-3'})
     df_a=df_a.transpose()
     print((df_a))
-    
-    #fig = stacked_barplot(df, rotation=45, legend_loc='best')
-    #fig.show()
+
     pal = sns.color_palette("Dark2_r")
     p=df_t.plot.bar(stacked=True,  color=pal, alpha=0.4, rot=0, title='Mapping events')
     p.set_ylabel("Distribution of mapping events [%]", fontsize=12)
@@ -405,7 +387,7 @@ def make_stacked_bp_perc():
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-    #plt.savefig('./UMI_Stacked_bp_mappingandCHIMERIC_PERCENTAGE_all_reps.pdf', bbox_inches='tight')
+    #plt.savefig('./UMI_Stacked.pdf', bbox_inches='tight')
     plt.show()
     plt.close
     
@@ -424,7 +406,7 @@ def make_stacked_bp_perc():
     fig.set_size_inches(1.5, 4)
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
     
-    #plt.savefig('./Stacked_bp_mappingevents_PERCENTAGE.pdf', bbox_inches='tight')
+    #plt.savefig('./Stacked_bp.pdf', bbox_inches='tight')
     plt.show()
     plt.close
 make_stacked_bp_perc()
