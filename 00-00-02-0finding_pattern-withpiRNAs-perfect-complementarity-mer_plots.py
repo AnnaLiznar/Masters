@@ -40,7 +40,7 @@ def find(dic_all, ik):
         for t, p in value.items():
             #print(t, p)
             if t=='piRNA':
-                #dic_instances[key]={t:p}
+                
                 temp=p
             if t=='target':
                 instances=[]
@@ -50,15 +50,15 @@ def find(dic_all, ik):
                             pass
                         else:
                             kk=i+ik
-                            #print(Seq(p[i:kk]))
+                            
                             count+=1
-                            #print('i:kk', i, kk)
+                            
                             instances.append(Seq(p[i:kk]))
-#Seq(p[i]+p[i+1]+p[i+2]+p[i+3])+p[i+4])#+p[i+5]+p[i+6]+p[i+7]+p[i+8]+p[i+9]+p[i+10]+p[i+11]+p[i+12]+p[i+13])
+
                     
                     m = motifs.create(instances)
                     r = m.reverse_complement() #reverse 
-                    #r.degenerate_consensus
+                    
                     ll=0
                     for pos, seq in r.instances.search(temp):
                         if key not in dic_instances.keys():
@@ -71,22 +71,18 @@ def find(dic_all, ik):
     tt['{}-mer'.format(ik)]=tt[0]
     tt=tt.drop(axis=1, labels=0)
     ttemp=pd.concat([ttemp, tt], axis=1, sort=False)
-    #ttemp=ttemp.join(tt, how='outer')
+    
     print('instances:', count)
     print(len(dic_instances))
     return ttemp
 
-
-# In[ ]:
 
 
 def plot(ttemp):
     """
     
     """
-    #df=pd.DataFrame.from_dict(dic_instances, orient='index')#.T
-    #df=df.astype(int)
-    #print(df)
+
     df=ttemp.reset_index(drop=True)
     #print(df)
     columns=list(df.columns)
@@ -96,9 +92,9 @@ def plot(ttemp):
     columns=list(df.columns)
     for c in columns:
         dd=pd.DataFrame(df[c].value_counts())
-        #dd=dd.transpose()
+
         final=final.append(dd, sort=True)
-    #print(final)
+
     
     ###merge by index
     final=final.groupby(level=0).sum()
@@ -146,7 +142,7 @@ def read_fasta():
     links them by ID in dictionary
     """
     
-    path="/data1/eCLASH/7-Exon-chimeras/thresh/"
+    path="/data1/eCLASH/"
     os.chdir(path)
     large=glob('large*')
     small=glob('small*')
@@ -168,9 +164,9 @@ def read_fasta():
         with open(path+'/'+large[i]) as fasta_file:  # Will close handle cleanly
             for title, sequence in SimpleFastaParser(fasta_file):
                 dic_all[title.split(None, 1)[0]].update({'target':sequence})
-                #dic_elemets[name.split('.txt')[0]].update({mo:line}
+
                 c+=1
-        #print(dic_all)
+
         for ik in ikk:
             
             d=find(dic_all, ik)
@@ -180,7 +176,7 @@ def read_fasta():
         
         break
     print ('count: ',count, 'c: ', c)
-    #return dic_all
+
 
             
 read_fasta()    
