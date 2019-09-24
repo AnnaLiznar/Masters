@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar
 # In[ ]:
 
 
@@ -207,8 +207,6 @@ df_Xins
 
 # In[ ]:
 
-
-#df_X1.plot.bar(subplots=True, rot=0)
 df_X1['length'].plot.bar(rot=0, color='b')
 
 # assign your bars to a variable so their attributes can be accessed
@@ -280,7 +278,7 @@ plt.savefig('/data1/Stretches/Amount_piRNAs_X1.pdf', bbox_inches='tight')
 plt.show()
 plt.close()
 
-#df_X1.plot.bar(subplots=True, rot=0)
+
 df_X1['length'].plot.bar(rot=0, color='g')
 
 
@@ -326,7 +324,7 @@ plt.savefig('/data1/Stretches/Amount_piRNAs_Xins.pdf', bbox_inches='tight')
 plt.show()
 plt.close()
 
-#df_X1.plot.bar(subplots=True, rot=0)
+
 df_Xins['length'].plot.bar(rot=0, color='g')
 
 
