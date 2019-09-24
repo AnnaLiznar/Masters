@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
 import subprocess, os, sys
 
-path_to_piPipes=input('Path to piPipes :') #/data1/AnLi_FM_MA/piPipes-master/bin
-input_file_path=input('Input File Path :') #/data1/AnLi_FM_MA/data/output_dir_sm2_180918 or 
-#/data1/AnLi_FM_MA/data/output_sm3_KD
-output_dir_name=input('Output Dir Name :') #insert_file_piPIpes
+path_to_piPipes=input('Path to piPipes :') 
+input_file_path=input('Input File Path :') 
+
+output_dir_name=input('Output Dir Name :') 
 
 
 def get_fq_files_from_output_dir(path_to_piPIpes, input_file_path, output_dir_name):
     """
     get files from dir
-    run piPipes_fastq_to_insert on shell by iterating over fq files
+    run piPipes_fastq_to_insert on shell 
     """
     re_re, re_re_namesss=[], []
     #------------------------------------
