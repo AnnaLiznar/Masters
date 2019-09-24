@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#written by Anna Liznar in jupyter
 # In[ ]:
 
 
@@ -23,7 +23,7 @@ import seaborn as sns
 # In[ ]:
 
 
-path_1='/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results_all/1_1u/'
+path_1='/data1/Master/CLASH/results/'
 
 
 df=pd.read_csv(path_1+'thresh_pairs.aligned.tab', header=None, sep='\t')
@@ -33,7 +33,7 @@ df=df.loc[:,[3,8,9]]
 df=df.drop_duplicates()
 #print(df)
 
-path_1='/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results_all/3_2u/'
+path_1='/data1/Master/CLASH/Analysis/results/'
 
 ddf=pd.read_csv(path_1+'thresh_pairs.aligned.tab', header=None, sep='\t')
 #print (df)
@@ -43,7 +43,7 @@ ddf=ddf.drop_duplicates()
 #print(ddf)
 
 
-path_1='/data1/Master/CLASH/Analysis/6-chimeraSearch_clipseqtool/results_all/5_3u/'
+path_1='/data1/Master/CLASH/Analysis/results/'
 
 dff=pd.read_csv(path_1+'thresh_pairs.aligned.tab', header=None, sep='\t')
 #print (df)
@@ -103,7 +103,7 @@ ax.patch.set(hatch='', edgecolor='black')
 fig.set_size_inches(8, 10)
 
 
-plt.savefig('/data1/greys.heatmap_pattern_Iana.png',dpi=400)
+plt.savefig('/data1/greys.heatmap_pattern.png',dpi=400)
 plt.show()
 
 
@@ -205,7 +205,7 @@ axes = plt.gca()
 plt.xticks(fontsize=12, rotation=90)
 plt.yticks(fontsize=12)
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-#plt.savefig('/data1/eCLASH/7-Exon-chimeras/thresh/plot_piRNA2_range12_with_names.pdf', bbox_inches='tight')
+#plt.savefig('/data1/eCLASH//plot_piRNA2_range12_with_names.pdf', bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -290,7 +290,7 @@ plt.setp(leg_texts, fontsize=12)
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=14)
 fig = plt.gcf()
 fig.set_size_inches(8.5, 5)
-#plt.savefig('/data1/Figures_Anna_pattern/MM_M_new_outsidemadded.pdf', bbox_inches='tight')
+#plt.savefig('/data1/MM_M_new_outsidemadded.pdf', bbox_inches='tight')
 
 plt.show()
 plt.close()
@@ -308,7 +308,7 @@ plt.yticks(fontsize=14)
 fig = plt.gcf()
 fig.set_size_inches(8.5, 5)
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=12)
-#plt.savefig('/data1/Figures_Anna_pattern/MM_M_Gap.pdf', bbox_inches='tight')
+#plt.savefig('/data1/MM_M_Gap.pdf', bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -335,7 +335,7 @@ plt.setp(leg_texts, fontsize=12)
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), fontsize=14)
 fig = plt.gcf()
 fig.set_size_inches(8.5, 5)
-#plt.savefig('/data1/Figures_Anna_pattern/MM_M_OutisideBDarea_PERC.pdf', bbox_inches='tight')
+#plt.savefig('/data1/MM_M_OutisideBDarea_PERC.pdf', bbox_inches='tight')
 
 plt.show()
 plt.close()
@@ -348,7 +348,7 @@ def mef():
     """
     reads rna cofold output 
     """
-    #sed -i 's/( /(/g' /data1/eCLASH/7-Exon-chimeras/thresh/Vienna/drei_target_pirnas.ps
+    #sed -i 's/( /(/g' /data1/eCLASH//Vienna/target_pirnas.ps
     path='/data1/eCLASH/7-Exon-chimeras/thresh/Vienna/tab_output_RNAcofold.txt'
     df=pd.read_csv(path, header=None, sep='\t')
     df=df.round(0)
@@ -357,7 +357,7 @@ def mef():
     df=df.sort_index()
     df['Frequencies Chimeras [%]']=(df[0]/df[0].sum())*100
     
-    path_s='/data1/eCLASH/7-Exon-chimeras/thresh/Vienna/tab_output_shuffled_RNAcofold.txt'
+    path_s='/data1/eCLASH/tab_output_shuffled_RNAcofold.txt'
     d=pd.read_csv(path_s, header=None, sep='\t')
     d=d.round(0)
     d=pd.DataFrame(d[0].value_counts())
@@ -391,7 +391,7 @@ def mef():
     plt.legend( bbox_to_anchor=(0.73,0.79), fontsize=14) #loc='center left',
     fig = plt.gcf()
     fig.set_size_inches(6, 5)
-    plt.savefig('/data1/Figures_Anna_pattern/Binding_energies_chimera_shuffled.pdf', bbox_inches='tight')
+    plt.savefig('/data1/Binding_energies_chimera_shuffled.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
