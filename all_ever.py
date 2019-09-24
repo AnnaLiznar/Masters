@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[ ]:
+#written by Anna Liznar in jupyter
 
 
 import subprocess, os, sys
@@ -85,11 +84,6 @@ main.observe(mainObserver)
 
 print('input: ', curDir.value,'\n' 'output: ', output_Dir.value)
 
-
-# In[ ]:
-
-
-#vincent widgets -> for the path (input and output)
 #go to directory where planarian rRNA full sequences are stored
 #choose a name for dir for indexed rRNA 
 def get_DirectoryContent():
@@ -156,16 +150,6 @@ get_DirectoryContent()
 main.observe(main_Observer)
 
 
-# In[ ]:
-
-
-print('input: ', curDir_rRNA.value,'\n' 'output: ', 
-      output_Dir_rRNA.value, '\n' 'file: ', sub_rRNA.value)
-
-
-# In[ ]:
-
-
 ###widgets for adapter trimming 
 pre_prepared_trimming_option = widgets.Select(options=[None, 
         "regular 3' adapter", "regular 5'adapter", 
@@ -197,16 +181,10 @@ tab_nest.set_title(0, 'Unique')
 tab_nest.set_title(1, 'definite')
        
 display (tab_nest)
-    
 
-
-# In[ ]:
 
 
 print (pre_prepared_trimming_option.value, txt_ind1.value)
-
-
-# In[ ]:
 
 
 #create output dir
@@ -259,7 +237,7 @@ def create_each_dir(fastq_dir_list:list):
     os.chdir(output_path)
     cwd_n=os.getcwd()
     os.chdir( cwd_n+'/' ) 
-    #os.chdir (os.path.join( output_path,'/'))
+
     output_subpath = os.getcwd()+'/'
     #read files in current directory (here it should be empty)
     subpath_list = os.popen('ls').readlines()
@@ -817,15 +795,15 @@ get_fq_files_from_output_dir(path_to_piPipes,
 
 
 path_to_genome=input('Path to genome/genome_name : ') 
-#path/final_dd_Smed_g4.fa
+
 path_to_bowtie=input('Path to Bowtie-build : ')
-#path/piPipes-master/bin
+
 input_file_path=input('Input File Path : ') 
-#path/insert_file_piPIpes
+
 output_dir_path=input('Output File Path : ') 
-#path/bowtie_index
+
 name_of_output_index_genome=input('Name of indexed genome : ')
-#Smed_g4 
+
 
 
 
@@ -904,13 +882,13 @@ get_index_genome_create_sam_bam_files_resp(path_to_genome,
 
 
 path_to_piPipes=input('Path to bedtools_piPipes : ')
-#//piPipes-master/bin
+
 path_to_input_bam=input('Path to bam files (input) : ') 
-#//planarian_genome/final_dd_Smed_g4.fa
+
 path_to_output_bed=input('Path to output w/o name of dir : ') 
-#//planarian_genome/final_dd_Smed_g4.fa
+
 output_dir_name_bed=input('Output File Name (bed files) : ') 
-#//bowtie_index
+
 import re
 
 def get_bam_files_run_bedtools_piPipes(path_to_piPipes,
@@ -949,13 +927,13 @@ def get_bam_files_run_bedtools_piPipes(path_to_piPipes,
     for file in bed_files:
 
         motif_name=re.findall(r'(\w{1}\d{1}-\w{1,2}\d{1,2})', file)
-        #_x1-sm31 32 33
+
         motif_name=re.findall(r'(\w{1}\d{1}-\w{3}\d{1})', file) 
-        #x1-unc1 2 3
+
         motif_name=re.findall(r'(\w{4}-\w{1,2}\d{1,2})', file) 
-        #xins-sm31 32 33
+
         motif_name=re.findall(r'(\w{4}-\w{3}\d{1})', file) 
-        #xins-unc1 2 3
+
         motif=motif_name[0]
         command="./bedtools_piPipes bamtobed -i {} > {}.bed".format(
                     path_to_input_bam+file, 
@@ -980,13 +958,13 @@ get_bam_files_run_bedtools_piPipes(path_to_piPipes,
 
 
 path_to_piPipes=input('Path to bedtools_piPipes : ')
-#//piPipes-master/bin
+
 sortmeRNA_insert_path=input('Path to sortmeRNA.insert files : ')
-#//insert_file_piPIpes/
+
 path_to_input_bed=input('Path to input bed files : ') 
-#//data/...
+
 path_to_output_bed2=input('Output path bed2 : ') 
-#/data/...
+
 
 def get_bed_files_runbed2(path_to_piPipes, sortmeRNA_insert_path,
                                 path_to_input_bed, 
@@ -1055,7 +1033,7 @@ get_bed_files_runbed2(path_to_piPipes,
 
 
 path_to_input_bed2=input('Path to input bed2 files : ') 
-#//planarian_genome/final_dd_Smed_g4.fa
+
 output_path_length=input('Path to output w/ new dir name : ')
 
 import re
@@ -1164,9 +1142,9 @@ move_files(path_to_input_bed2, output_path_length)
 
 
 path_to_input_bed2=input('Path to input bed2 files : ') 
-#/bowtie_index/bed_files/
+
 output_path_cutoff25=input('Path to output w/ new dir name : ')
-#//bowtie_index/bed_files/greater_than_25/
+
 
 def get_bed2_cutoff_25(path_to_input_bed2, output_path_cutoff25):
     """
@@ -1244,13 +1222,10 @@ def create_fasta_files(output_path_cutoff25):
 create_fasta_files(output_path_cutoff25) 
 
 
-# In[ ]:
-
-
 path_to_input_fasta=input('Path to input bed2 files : ') 
-#//fasta_cutoff/
+
 output_path_RNA=input('Path to output w/ new dir name : ')
-#//T_U_exchg
+
 
 def exchange_U_w_T(path_to_input_fasta, output_path_RNA):
     """
@@ -1295,11 +1270,11 @@ exchange_U_w_T(path_to_input_fasta, output_path_RNA)
 
 
 path_to_input_txt=input('Path to input txt files (unique KD/WT) : ') 
-#//T_U_exchg/'
+
 path_to_input_bed2=input('Path to input bed2 files : ') 
-#//bed_files/'
+
 output_path_mapped_bed2=input('Path to output w/ new dir name : ')
-#path_to_input_txt+ /mapped_unique
+
 
 def grep(path_to_input_txt, path_to_input_bed2, 
          output_path_mapped_bed2):
@@ -1333,7 +1308,7 @@ def grep(path_to_input_txt, path_to_input_bed2,
             file=file[1]
         if file.endswith('.txt') and file not in txt:
             txt.append(file)   
-    #print(txt)
+
     #----------------------------------------------------------
     os.chdir(path_to_input_bed2)
     os.getcwd()
@@ -1439,7 +1414,7 @@ def grep_unc(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2):
                 txt.append(file)   
         else:
             pass
-    #print('txt :', txt)
+
     #----------------------------------------------------------
     os.chdir(path_to_input_bed2)
     os.getcwd()
@@ -1457,7 +1432,7 @@ def grep_unc(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2):
             if file.endswith('.bed2') and file not in bed2:
                 bed2.append(file)
     
-    #print('bed :', bed2)
+
     dictup={}
    #----------------------------------------------------------
     for bedfile in bed2:
@@ -1487,7 +1462,7 @@ def grep_unc(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2):
     for key, val in dictup.items():
         
         op_file='unc_'+val.split('.txt')[0] 
-        #op_file=op_file[0]
+
         print(op_file)
         command = "grep -Fwf {} {} > {}/mapped_{}.bed2".format(
             path_to_input_txt+'/'+'unc_unique_from_'+val, 
@@ -1516,10 +1491,6 @@ def grep_unc(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2):
         
 grep_unc(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2)  
 
-
-# In[ ]:
-
-
 import sys,os
 import csv
 import dask.dataframe as dd
@@ -1528,7 +1499,7 @@ import numpy as np
 from glob import glob
 import subprocess
 
-path='/vendiagram/mapped_unique/intersected/'
+path='/path'
 os.chdir(path)
 path=os.getcwd()
 
@@ -1581,11 +1552,11 @@ for fi in filenames:
 
 
 path_to_input_all_annot=input('Path to input TE file (bed file) : ') 
-#/data1/AnLi_FM_MA/data/        ---> combined_all_annot_te_sorted.bed
+
 path_to_input_bed2=input('Path to input bed2 files (sorted and mapped) : ') 
-#//mapped_unique
+
 output_path_inters_bed=input('Path to output w/ new dir name : ')
-#//intersected
+
 
 import subprocess, os, sys
 import optparse, shutil
@@ -1661,9 +1632,9 @@ inters(path_to_input_all_annot, path_to_input_bed2, output_path_inters_bed)
 
 
 path_to_input_bed=input('Path to input bed files (weighed counts) : ') 
-#//DNA_mapped_unique/intersected/
+
 output_path_sense_bed=input('Path to output w/ new dir name (sense) : ')
-#//DNA_mapped_unique/intersected/sense_anti
+
 
 def inters(path_to_input_all_annot, path_to_input_bed2, 
            output_path_inters_bed):
@@ -1730,11 +1701,11 @@ inters(path_to_input_all_annot, path_to_input_bed2,
 
 
 path_to_input_all_annot=input('Path to input TE file (bed file) : ') 
-#/data1/AnLi_FM_MA/data/        ---> combined_all_annot_te_sorted.bed
+
 path_to_input_bed2=input('Path to input bed2 files (sorted and mapped) : ') 
-#/vendiagram/mapped_unique/
+
 output_path_inters_bed=input('Path to output w/ new dir name : ')
-#/fasta_cutoff/vendiagram/mapped_unique/intersected/non_overlap
+
 
 def inters(path_to_input_all_annot, path_to_input_bed2, output_path_inters_bed):
     """
@@ -1864,7 +1835,7 @@ with open('sm2_non_overl_summary.csv', 'a') as csv_file:
         
 
 #replace string with ''       
-path='//vendiagram/mapped_unique/intersected/'
+path='/path'
 os.chdir(path)
 path=os.getcwd()
     
@@ -1945,7 +1916,7 @@ import numpy as np
 from glob import glob
 
 
-os.chdir('/data1/AnLi_FM_MA/data/output_sm3_KD/normalized/')
+os.chdir('/path')
 path=os.getcwd()
 intersect=glob('norm*bed.csv')
 
@@ -1968,9 +1939,9 @@ for kind in col_14:
     if kind not in output_antisense:
         output_antisense[kind] = 0
         
-summary_string=['summary_sm3']
+summary_string=['summary']
 
-with open('sm3_summary.csv', 'w') as csv_file:
+with open('summary.csv', 'w') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(summary_string)
 
@@ -2085,9 +2056,9 @@ import subprocess, os, sys
 from glob import glob
 import optparse, shutil
 
-fasta_file_dir=str(input('file to input fastq: ')) #//miRNA_output/
-fasta_cutoff=str(input('path to output dir : ')) #/mapper_output
-genome=str(input('path to genome : ')) #//data/output_sm3_KD/bowtie_index/
+fasta_file_dir=str(input('file to input fastq: ')) 
+fasta_cutoff=str(input('path to output dir : ')) 
+genome=str(input('path to genome : '))
 
 def run_mapper_pl(fasta_file_dir, fasta_cutoff):
     """
@@ -2106,7 +2077,7 @@ def run_mapper_pl(fasta_file_dir, fasta_cutoff):
     output:fasta file, mapped to genome 
            arf file -> needed for mirdeep2.pl (finding miRNAs)
     """
-    if not os.path.exists(fasta_cutoff): #make dir for output
+    if not os.path.exists(fasta_cutoff): 
         os.mkdir(fasta_cutoff)    
     #-------------------------
     os.chdir(fasta_file_dir)
@@ -2139,10 +2110,6 @@ def run_mapper_pl(fasta_file_dir, fasta_cutoff):
     
 run_mapper_pl(fasta_file_dir, fasta_cutoff)
 
-
-# In[ ]:
-
-
 #run mirdeepl.pl 
 from Bio import SeqIO
 import subprocess, os, sys
@@ -2150,11 +2117,11 @@ from glob import glob
 import optparse, shutil
 
 fasta_file_dir=str(input('path to input fasta and arf: ')) 
-#//mapper_output/
+
 genome=str(input('path to genome : '))
-#//planarian_genome/
+
 mature_miRNA_path=str(input('path to mature planarian miRNA file : '))
-#//mature_miRNA_planaria  -> from mirbase
+
  
 def move_files_n(new_fasta):
     """
@@ -2225,8 +2192,7 @@ def run_mirdeep(fasta_file_dir, genome, mature_miRNA_path):
     fasta_files=glob('*.fa')
     arf_files=glob('*.arf')
     mature_miRNA='DNA_mature_mirna_mirbase.fa'
-    #print(fasta_files)
-    #print(arf_files)
+
     #-----------------------
 
     for arf in arf_files:        
@@ -2234,12 +2200,11 @@ def run_mirdeep(fasta_file_dir, genome, mature_miRNA_path):
             if arf.split(
                 '_reads_vs_mapper.arf')[0]+'.fa' == fasta.split(
                 'trimmed_')[1]:
-                #print(arf.split('_reads_vs_mapper.arf')[0])
-                #print(fasta.split('trimmed_')[1])
+
                 new_fasta=fasta.split(
                     'pot_miRNA_rejected_reads_trimmed_')[1]
                 #----------------------------------------------------
-                #print(new_fasta)
+
                 c = "miRDeep2.pl {} {} {} {} "+
                 "none none -t Planaria 2> {}.log ".format(
                     fasta_file_dir+fasta,
@@ -2248,8 +2213,7 @@ def run_mirdeep(fasta_file_dir, genome, mature_miRNA_path):
                     mature_miRNA_path+'/'+mature_miRNA,
                     new_fasta.split('.fa')[0]
 
-                    ) #name of genome is saved as string, 
-                #change here if needed
+                    ) 
 
                 print(c)
                 subprocess.check_call(c, stdout=subprocess.PIPE,
@@ -2274,11 +2238,11 @@ import optparse, shutil
 from glob import glob
 
 path_to_input_txt=input('Path to input txt files (unique KD/WT) : ') 
-#//mapper_output/mirdeep-pl_output/insert/
+
 path_to_input_bed2=input('Path to input bed2 files : ') 
-#//bed_files/less_than_26/
+
 output_path_mapped_bed2=input('Path to output w/ new dir name : ')
-#/data/output_sm3_KD/grep_miRNA
+
 
 def grep(path_to_input_txt, path_to_input_bed2, output_path_mapped_bed2):
     """
@@ -2363,9 +2327,9 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 path_to_bed=input('Path to bed file: ') 
-#//vendiagram/mapped_unique/intersected/
+
 path_protar=input('Path to targeted and protected piRNAs: ') 
-#/data1/AnLi_FM_MA/data/output_sm3_KD/protected_targeted_piRNAs/
+
 
 def output_folder(path_t):
     """
@@ -2484,9 +2448,7 @@ def in_reps():
                           '/thresh_allreps')
     os.chdir('/data/output_sm3_KD/grep_miRNA/names_norm/') 
     path_protar='/data/output_sm3_KD/grep_miRNA/names_norm/'
-    
-    #path_op=output_folder(path_protar+'/thresh_allreps')
-    #os.chdir(path_protar+'/normalized') #change current working dir
+
     os.getcwd()
     exon=glob('norm*.csv')
     
@@ -2505,10 +2467,10 @@ def in_reps():
         p=file.split('_')
         if len(p)==4:
             columnname=p[2].split('sm3')[1]
-            #norm unc sm33 xins.bed #['', 3]
+
         else:
             columnname=p[1].split('sm3')[1]
-            #norm sm33 xins.bed
+
         print (columnname)
         df=pd.read_csv(path_protar+file, sep='\t', 
                        engine='python', header=None, usecols=[0,2])
@@ -2516,7 +2478,7 @@ def in_reps():
                        #engine='python', header=None, usecols=[0,3])
         df=df.drop_duplicates(subset=[0], 
                               keep='first', ).reset_index(drop=True)
-        #print(df.head(2))
+
         df['names']=df[0] #have two columns -> zero and 'names'
         df.rename(columns={0:columnname}, inplace=True) 
         #columnname -> number of replicate
@@ -2554,13 +2516,13 @@ def thresh():
     count the sum of wc and drop all below upper quartile number
     save descriptions of df (all) and after threshold
     """
-    path_protar='//data/output_sm3_KD/grep_miRNA/names_norm/' #temp
+    path_protar='//data//' #temp
     
-    path_op=output_folder(path_protar+'/thresh_allreps')
+    path_op=output_folder(path_protar+'/thresh')
     
     
     
-    os.chdir(path_protar+'/thresh_allreps') #change current working dir
+    os.chdir(path_protar+'/thresh') #change current working dir
     os.getcwd()
     files=glob('123*.csv')
     #later for aggregate
@@ -2569,7 +2531,7 @@ def thresh():
     
     for file in files:
         print(file)
-        df=pd.read_csv(path_protar+'thresh_allreps/'+file, sep='\t', 
+        df=pd.read_csv(path_protar+'thresh/'+file, sep='\t', 
                         engine='python')
         df=df.groupby(df['names']).aggregate(col)
         df=df.dropna(subset=['1', '2', '3'], thresh=2)
@@ -2583,14 +2545,10 @@ def thresh():
         df['sum_wc']=df[col_list].sum(axis=1)
         
         df_upper_quartile=df.loc[:,'sum_wc'].quantile(q=0.75)#, axis=1)
-        print('up qu:', df_upper_quartile) #for Iana
+        print('up qu:', df_upper_quartile) #
         df_thresh5=df.drop(df[df['sum_wc']<df_upper_quartile].index)
         df_13=df.drop(df[df['sum_wc']<1.3].index)#, inplace=True)
 
-        #print(df_thresh5.head(2))
-
-
-        
         df_13=df_13.drop(['wc_1', 'wc_2', 'wc_3'], axis=1)
         df_13.to_csv('{}/thresh_1.3_{}'.format(path_op, file.split('123_')[1]), 
                       header=True, sep='\t', index=False)
@@ -2633,14 +2591,11 @@ def protar_py():
         df['unique_{}'.format(one_v)]=df[one_v][df[one_v].isin(df['names'])]
         df['unique_{}'.format(two_v)]=df[two_v][df[two_v].isin(df['names'])]
         print(df)
-        #df['unique_{}'.format(two_v)]=df[two_v][~df[two_v].isin(df[0])]mit schlange
-        #---> nur die aufnehmen, 
-        #die nicht in df[two_v] vorkommen!genau das gegenteil
+
        
         unique_protected=df['unique_{}'.format(one_v)].dropna(how='all')
         unique_pingpong=df['unique_{}'.format(two_v)].dropna(how='all')
-        #print(unique_protected)
-        #print(unique_pingpong)
+
         df.to_csv('{}/whole_df_{}.csv'.format(path_op, 
                     ff), 
                     header=True, sep='\t', index=False)
@@ -2714,8 +2669,7 @@ def get_known_unique(): #here
     unique_path=output_folder(path+'/edgeR_dataframe')
     files= get_files_2(path+'/unique_miRNA', '*known_mature.bed2')
     print(path)
-    #unique_path=output_folder('/Users/annaliznar/Downloads/DELETEMEE')
-    #files= get_files_2('/Users/annaliznar/Downloads/', 'unique_*')
+
     print(files)
     
     x1=pd.DataFrame(columns=['sequences', 'unc1', 'unc2', 'unc3',
@@ -2773,13 +2727,13 @@ def get_known_unique(): #here
     print(grouped_xins[0:10])    
     
     grouped_x1.to_csv(
-        '{}/edgeR_dataframe/known_miRNAs_for_edgeR_x1.csv'.format(
+        '{}/known_miRNAs_for_edgeR_x1.csv'.format(
         path), sep='\t', 
                  header=True, 
                  index=True)
     
     grouped_xins.to_csv(
-        '{}/edgeR_dataframe/known_miRNAs_for_edgeR_xins.csv'.format(
+        '{}/known_miRNAs_for_edgeR_xins.csv'.format(
         path), sep='\t', 
                  header=True, 
                  index=True)
@@ -2799,10 +2753,7 @@ get_known_unique()
     """
     unique_path=output_folder(path+'/edgeR_dataframe')
     files= get_files_2(path+'/unique_miRNA', 'uni*bed2')
-    
-    #unique_path=output_folder('/Users/annaliznar/Downloads/DELETEMEE')
-    #files= get_files_2('/Users/annaliznar/Downloads/', 'unique_*')
-    #print(files)
+
     
     
     x1=pd.DataFrame(columns=['sequences', 'unc1', 'unc2',
@@ -2833,16 +2784,8 @@ get_known_unique()
         elif 'xins' in motif and motif in file:
             df.rename(columns={'7':columnname}, inplace=True)
             xins=xins.append(df, ignore_index=True)
-    #print(len(x1['sequences']))  
-    
-    #x1=x1.drop_duplicates(subset='sequences',keep='first')
-    #xins=xins.drop_duplicates(subset='sequences',keep='first')
-    #print(len(x1['sequences'])) 
-    #print(x1.head(5))
-    #print(xins.head(5))
-    
-    
-    #print(len(xins['sequences']))   'sequences':'first', 
+
+ 
     col={'unc1':'sum', 'unc2': 'sum', 'unc3':'sum', 
          'sm31':'sum', 'sm32':'sum', 'sm33':'sum'}#,'sequences':'first'}
     grouped_xins=xins.groupby(xins['sequences']).aggregate(col) 
@@ -3112,22 +3055,22 @@ def calc_norm_fac_known(): #new -> only knwon miRNAs
     #print(value_kd_xins)
     
     df['fac_unc_x1']=value_unc_x1/df.loc[:,'sum']
-    #print(df)
+
     df['fac_unc_x1']=df.loc[0:5,'fac_unc_x1']
-    #print(df)
+
     df['fac_kd_x1']=value_kd_x1/df.loc[:,'sum']
-    #print(df)
+
     df['fac_kd_x1']=df.loc[0:5,'fac_kd_x1']
-    #print(df)
+
     df['fac_unc_xins']=value_unc_xins/df.loc[:,'sum']
-    #print(df)
+
     df['fac_unc_xins']=df.loc[6:11,'fac_unc_xins']
-    #print(df)
+
     df['fac_kd_xins']=value_kd_xins/df.loc[:,'sum']
-    #print(df)
+
     df['fac_kd_xins']=df.loc[6:11,'fac_kd_xins']
-    #print(df)
-    #factor['factor']=factor['factor1'].combine_first(factor['factor2'])
+
+
     df['unc_factor']=df['fac_unc_x1'].combine_first(df['fac_unc_xins'])
     df['kd_factor']=df['fac_kd_x1'].combine_first(df['fac_kd_xins'])
     #print(df)
@@ -3169,8 +3112,7 @@ def calc_norm_fac_known(): #new -> only knwon miRNAs
     k.set_xlabel('sample', fontsize=14)
     plt.xticks(fontsize=13)
     plt.yticks(fontsize=13)
-    #plt.figure(figsize=(10,4))
-    #plt.bar(x=1,width=2, align='center', height=0.3)
+
     for i, v in enumerate(df['unc_factor']):
         #print(i, v)
         #[p.text(v, i, '{:.2f}'.format(v))
@@ -3255,9 +3197,9 @@ def bar_plot_norm_factor():
     """
     calculate normalization factor 
     """
-    path='/data1/AnLi_FM_MA/data/output_sm3_KD/grep_miRNA/'
+    path='/'
     path = output_folder(path+'/norm_fact_known_miRNAs')
-    #path='/data1/AnLi_FM_MA/data/output_sm3_KD/grep_miRNA/'
+
     
     df1=pd.DataFrame(columns=['sample', 'factor'], index=range(1,7), 
                     data={'sample': ['unc1_x1','unc2_x1','unc3_x1',
@@ -3355,7 +3297,7 @@ def get_files_2(path_2, motif)-> list:
     files=glob(motif)
     return(files)
 #global
-path='/data/output_sm3_KD/grep_miRNA/exon_bed_files_for_venn/'
+path='/data/'
 
 def output_folder(path_t):
     """
@@ -3388,8 +3330,7 @@ def normalize_files():
      load bed2 files 
      create new column with weighted and normalized counts
     """
-    path_nor=output_folder('/data1/AnLi_FM_MA/data/output_sm3_KD/'+
-                           '/normalized_total_miRNA')
+    path_nor=output_folder('/data1/')
     files= get_files_2(path, 'all_inter*bed')
     
     print (files)
@@ -3399,8 +3340,7 @@ def normalize_files():
                                  header=None, 
                                  usecols=[5,6,12,13,14,17], 
                                  chunksize=100000):
-        #df=pd.read_csv(path+file, sep='\t', engine='python',
-        #header=None, usecols=[5,6,12,13,14,17])
+
             df=chunk
             
             if 'unc_sm31_X1' in file:
@@ -3710,12 +3650,11 @@ def summary():
     find each annotated element in col 4 
     count the sum from weighted count 
     """
-    #path='/data1/AnLi_FM_MA/data/output_sm3_KD/grep_miRNA/normalized/'
-    path='/data1/AnLi_FM_MA/data/output_sm3_KD/'+
-    '/normalized_total_miRNA'
+
+    path='/data1/'
     intersect=get_files_2(path, 'norm*.bed.csv')
     path_sum=output_folder(
-        '/data1/AnLi_FM_MA/data/output_sm3_KD/grep_miRNA/summary_for_barplot')
+        '/summary_for_barplot')
     
     print(intersect)
     
@@ -3724,9 +3663,6 @@ def summary():
     with open(path_sum+'/maker_new_sm3_summary.csv', 'w') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(summary_string)
-
-    #i=intersect[0]
-    #path='/data1/AnLi_FM_MA/data/output_sm3_KD/normalized/'
     
     for i in intersect: 
         print(i)
