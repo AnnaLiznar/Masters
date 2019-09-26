@@ -21,7 +21,7 @@ def total_number_reads():
     2. there are 11 different folders as zip -> go into that and open folder 
         -> open fastqc_data.txt 
     3. go into txt file and find in lines Filename with string and Total Sequences with regrex  
-        Filename blablabla
+        Filename 
         Total Sequences 0123456789
     4. write into dictionary
         dict itself key filename and value the other sub-dict
