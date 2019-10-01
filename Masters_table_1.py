@@ -374,9 +374,9 @@ def append_chimeras():
     df_chim=pd.DataFrame.from_dict(dic_chimera)
     print(df_chim)
     df_chim=df_chim.apply(pd.to_numeric)
-    df_chim['Nr10_piRNA_1']=(df_chim['Nr10_piRNA_1']/1.5)
-    df_chim['Nr12_piRNA_3']=(df_chim['Nr12_piRNA_3']/3.5)
-    df_chim['Nr11_piRNA_2']=(df_chim['Nr11_piRNA_2']*0.2)
+    df_chim['Nr10_piRNA_1']=(df_chim['Nr10_piRNA_1'])
+    df_chim['Nr12_piRNA_3']=(df_chim['Nr12_piRNA_3'])
+    df_chim['Nr11_piRNA_2']=(df_chim['Nr11_piRNA_2'])
     df=pd.read_csv('/data1/eCLASH/1_UMI_Overview_FÜRDIEMA_TOTAL_AMOUNT.csv', sep='\t', index_col= [0])
 
     df_upper=df[['Nr08_ctrl_1', 'Nr09_ctrl_2', 'Nr10_piRNA_1', 'Nr11_piRNA_2', 'Nr12_piRNA_3']]
