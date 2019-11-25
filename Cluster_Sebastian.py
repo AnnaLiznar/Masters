@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# written by Anna Liznar
 
 
 import subprocess, os, sys
