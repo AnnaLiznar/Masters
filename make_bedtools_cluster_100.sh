@@ -1,29 +1,29 @@
 #/bin/bash 
-
+#written by Anna Liznar
 cd /data1/Sebastian_sense_piRNAs/
 
 
 mkdir -p ./Cluster_100
 
-#for i in *piRNAs.bed; do 
+for i in *piRNAs.bed; do 
 
-#sort-bed  $i > ${i%%_mapped_weighted_filtered_genes_sense_piRNAs.bed}_sorted.bed
-#done 
+sort-bed  $i > ${i%%_mapped_weighted_filtered_genes_sense_piRNAs.bed}_sorted.bed
+done 
 
-#for i in *_sorted.bed; do
+for i in *_sorted.bed; do
 
-#bedtools cluster -i $i -d 100 > /data1/Sebastian_sense_piRNAs/Cluster_100/${i%%sorted.bed}Cluster_100.bed
+bedtools cluster -i $i -d 100 > /data1/Sebastian_sense_piRNAs/Cluster_100/${i%%sorted.bed}Cluster_100.bed
 
-#done 
+done 
 
 
 cd ./Cluster_100/ 
-#mkdir -p ./Uniq
-#for uniquely mapped piRNAs 
+mkdir -p ./Uniq
+for uniquely mapped piRNAs 
 
-#for f in *_Cluster_100.bed; do
-#cat $f | awk '{if($4 ==1)print}' > ./Uniq/${f%%.bed}_unique.bed
-#done 
+for f in *_Cluster_100.bed; do
+cat $f | awk '{if($4 ==1)print}' > ./Uniq/${f%%.bed}_unique.bed
+done 
 
 
 path=/data1/Sebastian_sense_piRNAs/Cluster_100/Uniq/
